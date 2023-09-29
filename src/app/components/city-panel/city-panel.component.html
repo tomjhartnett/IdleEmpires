@@ -1,0 +1,33 @@
+<div class="city-list">
+  <div *ngFor="let city of cities" class="city-card">
+    <div class="city-info">
+      <h2>{{ city.name }}</h2>
+      <p>Population: {{ city.population }} {{ city.idlePopulation > 0 ? "(" + city.idlePopulation + " Idle)" : "" }}, Next Pop Cost: {{city.nextPopulationCost}}</p>
+      <p>Daily Food Change: {{city.expectedDailyFoodChange}}, Daily Pop Cost: {{city.population}}</p>
+      <p>Expected Yearly Pop Gain: {{city.expectedYearlyPopGrowth}}</p>
+    </div>
+    <div class="profession-list">
+      <div class="profession-card" *ngFor="let building of city.buildings">
+        <div class="priority-controls">
+          <button (click)="adjustPriority(city, building, 'decrease')">-</button>
+          <span>{{ building.priority }}</span>
+          <button (click)="adjustPriority(city, building, 'increase')">+</button>
+        </div>
+        <div class="profession-name">
+          <span>Level {{building.level}} {{ building.name }}<br>Output: {{building.outputFormatted}}</span>
+        </div>
+        <div class="profession-controls">
+          <button (click)="adjustWorkers(city, building, 'decrease')">-</button>
+          <span style="margin: 3px; text-align: center">{{ building.workers }} <br>{{ building.workers == building.maxWorkers ? "Max" : "" }}</span>
+          <button (click)="adjustWorkers(city, building, 'increase')">+</button>
+        </div>
+        <div class="upgrade-button">
+          <button (click)="upgrade(city, building)">
+            Upgrade <br>
+            {{building.upgradeCostFormatted}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

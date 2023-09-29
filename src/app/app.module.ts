@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
+import {AppComponent} from "./components/app.component";
+import {CityPanelComponent} from "./components/city-panel/city-panel.component";
+import {ResourceBarComponent} from "./components/resource-bar/resource-bar.component";
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+    declarations: [
+        AppComponent,
+        CityPanelComponent,
+        ResourceBarComponent
+    ],
   imports: [
     BrowserModule
   ],

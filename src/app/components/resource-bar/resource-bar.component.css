@@ -1,0 +1,29 @@
+.resource-bar {
+  width: 100%;
+  height: 30px; /* Adjust the height as needed */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333; /* Set the background color as desired */
+  color: #fff; /* Set the text color as desired */
+  padding: 0 10px; /* Adjust padding as needed */
+}
+
+.resource {
+  flex: 1;
+  text-align: center;
+  margin: 0 5px; /* Adjust spacing between resources */
+}
+
+button {
+  background-color: grey;
+  font-size: 16px;
+  color: #fff;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.selected {
+  background-color: #007bff;
+}

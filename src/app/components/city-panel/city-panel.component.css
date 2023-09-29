@@ -1,0 +1,79 @@
+.city-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.city-card {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%; /* Card expands to fill available space */
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-wrap: wrap; /* Allow content to wrap within the card */
+}
+
+.city-info {
+  flex: 1; /* City name/population box takes up 1/3 of the width */
+  min-width: calc(33.33% - 10px); /* Ensure at least 1/3 of the width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 10px; /* Add space between city name/population and professions */
+}
+
+.profession-list {
+  flex: 2; /* Profession box takes up 2/3 of the width */
+  display: flex;
+  flex-wrap: wrap; /* Allow professions to wrap as needed */
+  align-items: flex-start; /* Align professions to the left */
+  gap: 10px; /* Add gap between professions */
+}
+
+.profession-card {
+  flex-basis: calc(50% - 5px); /* Each profession card takes up 50% of the width */
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.profession-name {
+  flex: 2; /* Expand to fill available space */
+  margin: 4px;
+}
+
+.profession-controls {
+  flex: 1; /* Expand to fill available space */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 4px;
+}
+
+.priority-controls {
+  flex: 1; /* Expand to fill available space */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 4px;
+}
+
+button {
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
