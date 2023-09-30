@@ -17,6 +17,8 @@ export class ResourceManagementService {
 
   constructor() {
     this.resources.set("Wood", 100);
+    this.resources.set("Gold", 0);
+    this.resources.set("Research", 0);
   }
 
   hasResources(resources: {resource: string, amount: number}[]) {

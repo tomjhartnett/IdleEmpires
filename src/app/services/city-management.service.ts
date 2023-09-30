@@ -30,14 +30,15 @@ export class CityManagementService {
     this.cities.push(
       new City("Madrid",
         [
-          new Building(0, "Farm", 4, new Job("Farming", [], [{resource: "Crops", amount: 3}]), [{resource: "Wood", amount: 1}]),
-          new Building(1, "Woodcutter", 1, new Job("Woodcutting", [], [{resource: "Wood", amount: 1}]), [{resource: "Wood", amount: 1}])
+          new Building(1, "Farm", 4, new Job("Farming", [], [{resource: "Crops", amount: 4}]), [{resource: "Wood", amount: 2}]),
+          new Building(0, "Woodcutter", 1, new Job("Woodcutting", [], [{resource: "Wood", amount: 1}]), [{resource: "Wood", amount: 2}]),
+          new Building(3, "Tax Collector", 1, new Job("Tax Collecting", [], [{resource: "Gold", amount: 1}]), [{resource: "Wood", amount: 2}]),
+          new Building(4, "Research Center", 1, new Job("Researching", [{resource: "Gold", amount: 1}], [{resource: "Research", amount: 1}]), [{resource: "Wood", amount: 2}])
         ],
         4
       )
     );
   }
-
   tick() {
     this.getCities().forEach(city => {
       let food = city.currentFoodFloat + (city.totalExpectedResources.get("Crops") || 0);
@@ -65,7 +66,7 @@ export class CityManagementService {
       }
       city.currentFoodFloat = food;
 
-      this.resourceManagementService.addResources(resources)
+      this.resourceManagementService._changeResources(resources)
     });
 
 
@@ -73,10 +74,7 @@ export class CityManagementService {
       let upgrades = city.checkAutoUpgrade();
       if (upgrades.length) {
         upgrades.forEach(building => {
-          if (this.resourceManagementService.hasResources(building.upgradeCost)) {
-            this.resourceManagementService.removeResources(building.upgradeCost);
-            building.level++;
-          }
+          this.upgradeBuilding(city, building);
         })
       }
     });
@@ -88,15 +86,12 @@ export class CityManagementService {
     return this.cities;
   }
 
-  upgradeBuilding(city: City, building: Building): boolean {
-    const neededResources = city.buildings.find(b => b === building)?.upgradeCost;
-    if (neededResources && this.resourceManagementService.hasResources(neededResources)) {
+  upgradeBuilding(city: City, building: Building) {
+    let b = city.buildings.find(b => b === building);
+    if (b && this.resourceManagementService.hasResources(b.upgradeCost)) {
       building.level++;
       this.getCities().forEach(city => city.checkWorkerPriority());
-      this.resourceManagementService.removeResources(neededResources);
-      return true;
+      this.resourceManagementService.removeResources(b.upgradeCost);
     }
-
-    return false;
   }
 }

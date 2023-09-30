@@ -25,7 +25,7 @@ export class GameEngineService {
       this._doTurn();
       setTimeout(() => {
         this._gameTick();
-      }, 500);
+      }, 1000);
     }
   }
 
