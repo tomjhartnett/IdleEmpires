@@ -56,5 +56,9 @@ export class Building {
     this.job = job;
     this.image = image;
     this._upgradeCost = upgradeCost;
+
+    if(name != "Farm" && name != "Woodcutter") {
+      this.autoUpgrade = false;
+    }
   }
 }

@@ -1,1 +1,13 @@
-<p>research-panel works!</p>
+<div class="research-screen">
+  <div class="column" *ngFor="let column of technologies">
+    <div class="technology-box" *ngFor="let technology of column">
+      <div class="technology-header">
+        <div class="technology-name">{{ technology.name }}</div>
+        <div class="technology-description">{{ technology.description }}</div>
+      </div>
+      <div class="technology-footer" [ngClass]="{'completed': technology.isCompleted}">
+        <button *ngIf="!technology.isCompleted" class="research-button" (click)="researchTech(technology)">{{technology.formattedCost}}</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -30,12 +30,12 @@ export class CityManagementService {
     this.cities.push(
       new City("Madrid",
         [
-          new Building(1, "Farm", 4, new Job("Farming", [], [{resource: "Crops", amount: 4}]), [{resource: "Wood", amount: 2}]),
-          new Building(2, "Woodcutter", 1, new Job("Woodcutting", [], [{resource: "Wood", amount: 1}]), [{resource: "Wood", amount: 2}]),
-          new Building(3, "Tax Collector", 1, new Job("Tax Collecting", [], [{resource: "Gold", amount: 1}]), [{resource: "Wood", amount: 2}]),
-          new Building(4, "Research Center", 1, new Job("Researching", [{resource: "Gold", amount: 1}], [{resource: "Research", amount: 1}]), [{resource: "Wood", amount: 2}])
+          new Building(3, "Farm", 4, new Job("Farming", [], [{resource: "Crops", amount: 4}]), [{resource: "Wood", amount: 2}]),
+          new Building(4, "Woodcutter", 2, new Job("Woodcutting", [], [{resource: "Wood", amount: 1}]), [{resource: "Wood", amount: 2}]),
+          new Building(1, "Tax Collector", 2, new Job("Tax Collecting", [], [{resource: "Gold", amount: 1}]), [{resource: "Wood", amount: 2}]),
+          new Building(2, "Research Center", 1, new Job("Researching", [{resource: "Gold", amount: 1}], [{resource: "Research", amount: 1}]), [{resource: "Wood", amount: 2}])
         ],
-        4
+        8
       )
     );
   }

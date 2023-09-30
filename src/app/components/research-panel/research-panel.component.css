@@ -1,0 +1,48 @@
+.research-screen {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px; /* Adjust spacing as needed */
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.technology-box {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  width: 200px; /* Adjust the width as needed */
+}
+
+.technology-header {
+  font-weight: bold;
+}
+
+.technology-footer {
+  margin-top: 10px;
+}
+
+.technology-name {
+  font-size: 22px;
+}
+
+.completed {
+  background-color: green; /* Change the color for completed technologies */
+}
+
+.research-button {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}

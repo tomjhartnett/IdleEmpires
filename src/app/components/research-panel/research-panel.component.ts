@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ResearchService} from "../../services/research.service";
+import {Technology} from "../../models/technology.model";
 
 @Component({
   selector: 'app-research-panel',
@@ -8,11 +9,18 @@ import {ResearchService} from "../../services/research.service";
 })
 export class ResearchPanelComponent implements OnInit {
 
+  technologies: Technology[][];
+
   constructor(
-    researchService: ResearchService
-  ) { }
+    private researchService: ResearchService
+  ) {
+    this.technologies = researchService.getResearchTree();
+  }
 
   ngOnInit(): void {
   }
 
+  researchTech(tech: Technology) {
+    this.researchService.research(tech);
+  }
 }
