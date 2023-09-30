@@ -24,14 +24,22 @@ export class ResearchService {
     return this.techTree;
   }
 
+  isResearched(techName: string): boolean {
+    let isCompleted = false;
+    this.techTree.forEach(column => {
+      column.forEach(t => {
+        if(t.name === techName)
+          isCompleted = t.isCompleted;
+      })
+    })
+    return isCompleted;
+  }
 
 
   techTree = [
     [
-      new Technology('Efficient Farming','+20% farming speed', [{resource: "Research", amount: 100}, {resource: "Gold", amount: 100}]),
       new Technology('Ranches','Adds meat as an additional food source', [{resource: "Research", amount: 200}, {resource: "Gold", amount: 200}]),
       new Technology('Kitchens','Uses simple foods to make more efficient meals', [{resource: "Research", amount: 400}, {resource: "Gold", amount: 400}]),
-      new Technology('Masterful Farming','+40 farming speed', [{resource: "Research", amount: 800}, {resource: "Gold", amount: 800}]),
     ],
     [
       new Technology('Iron Mines','Allows the mining of iron', [{resource: "Research", amount: 100}, {resource: "Gold", amount: 100}]),
@@ -47,15 +55,10 @@ export class ResearchService {
       new Technology('Stables','Allows production of mounted units', [{resource: "Research", amount: 800}, {resource: "Gold", amount: 800}]),
     ],
     [
-      new Technology('Dedicated Research','+20% research production', [{resource: "Research", amount: 100}, {resource: "Gold", amount: 100}]),
-      new Technology('Higher Taxes','+20% gold income', [{resource: "Research", amount: 200}, {resource: "Gold", amount: 200}]),
       new Technology('Temples','Unlocks religion and faith generation', [{resource: "Research", amount: 400}, {resource: "Gold", amount: 400}]),
-      new Technology('Dedicated to the Faith','+20% faith production', [{resource: "Research", amount: 800}, {resource: "Gold", amount: 800}]),
     ],
     [
       new Technology('Natural Growth','Allows the founding of a 2nd city', [{resource: "Research", amount: 100}, {resource: "Gold", amount: 100}]),
-      new Technology('Rationing','20% less food required for population growth', [{resource: "Research", amount: 200}, {resource: "Gold", amount: 200}]),
-      new Technology('Efficient Building','20% reduced cost of building upgrades', [{resource: "Research", amount: 400}, {resource: "Gold", amount: 400}]),
       new Technology('Expansive Empire','Allows the founding of a 3nd city', [{resource: "Research", amount: 800}, {resource: "Gold", amount: 800}]),
     ]
   ];
