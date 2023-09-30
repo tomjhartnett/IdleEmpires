@@ -1,0 +1,19 @@
+.vertical-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 100vh;
+}
+
+app-resource-bar {
+  /* Adjust the styles as needed */
+  flex: 0; /* This will anchor the resource bar to the top */
+}
+
+app-main-navbar {
+  /* Adjust the styles as needed */
+}
+
+app-city-panel {
+  /* Adjust the styles as needed */
+}

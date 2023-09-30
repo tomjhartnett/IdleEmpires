@@ -1,2 +1,7 @@
-<app-resource-bar></app-resource-bar>
-<app-city-panel></app-city-panel>
+<div class="vertical-container">
+  <app-resource-bar></app-resource-bar>
+  <app-main-navbar (componentSelector)="selectComponent($event)"></app-main-navbar>
+  <app-city-panel *ngIf="component=='Buildings'"></app-city-panel>
+  <app-research-panel *ngIf="component=='Research'"></app-research-panel>
+  <app-map-panel *ngIf="component=='Map'"></app-map-panel>
+</div>

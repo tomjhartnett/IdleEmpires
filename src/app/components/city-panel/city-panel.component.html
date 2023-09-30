@@ -20,7 +20,15 @@
           <button (click)="changeWorkerPriority(city, building, 'None')" [ngClass]="{'selected': building.workerPriorityType == 'None'}">None</button>
         </div>
         <div class="profession-name">
-          <span>Level {{building.level}} {{ building.name }}<br>Output: {{building.outputFormatted}}</span>
+          <span>
+            Level {{building.level}} {{ building.name }}
+            <div *ngIf="building.input.length">
+              Input: {{building.inputFormatted}}
+            </div>
+            <div>
+              Output: {{building.outputFormatted}}
+            </div>
+          </span>
         </div>
         <div class="profession-controls">
           <button (click)="adjustWorkers(city, building, 'decrease')">-</button>

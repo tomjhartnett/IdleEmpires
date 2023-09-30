@@ -9,8 +9,8 @@ export class Building {
 
   workers: number = 0;
   priority: number;
-  workerPriorityType: 'Max' | 'Maintain' | 'Fixed' | 'None' = 'Fixed';
-  autoUpgrade = false;
+  workerPriorityType: 'Max' | 'Maintain' | 'Fixed' | 'None' = 'Max';
+  autoUpgrade = true;
 
   get expectedOutput(): {resource: string, amount: number}[] {
     return this.job.outputResources.map(r => ({resource: r.resource, amount: r.amount * this.workers}));
@@ -24,9 +24,18 @@ export class Building {
     return this.upgradeCost.map(r => `${r.resource}: ${r.amount} `);
   }
 
+  get input(): {resource: string, amount: number}[] {
+    return this.job.inputResources.map(r => ({resource: r.resource, amount: r.amount * this.workers}));
+  }
+
   get output(): {resource: string, amount: number}[] {
     return this.job.outputResources.map(r => ({resource: r.resource, amount: r.amount * this.workers}));
   }
+
+  get inputFormatted() {
+    return this.input.map(r => `${r.resource}: ${r.amount} `);
+  }
+
   get outputFormatted() {
     return this.output.map(r => `${r.resource}: ${r.amount} `);
   }

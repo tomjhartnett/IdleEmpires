@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'IdleEmpires';
+  component: "Map" | "Buildings" | "Research" = "Buildings";
+
+  selectComponent(component: "Map" | "Buildings" | "Research") {
+    this.component = component;
+  }
 }

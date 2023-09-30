@@ -1,0 +1,5 @@
+<div class="navbar-container">
+  <button (click)="changeTab('Map')" class="navbar-button" [ngClass]="{'selected': selected == 'Map'}">Map</button>
+  <button (click)="changeTab('Buildings')" class="navbar-button" [ngClass]="{'selected': selected == 'Buildings'}">Buildings</button>
+  <button (click)="changeTab('Research')" class="navbar-button" [ngClass]="{'selected': selected == 'Research'}">Research</button>
+</div>
