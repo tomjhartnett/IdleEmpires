@@ -68,6 +68,8 @@ export class City {
     this.buildings = buildings.sort((a, b) => a.priority - b.priority);
     this.population = population;
     this.image = image;
+
+    this.checkWorkerPriority();
   }
 
   _getPopCost(currentPop: number): number {
@@ -75,14 +77,16 @@ export class City {
   }
 
   changeWorkforce(building: Building, amount: number) {
-    if (this.idlePopulation >= amount) {
-      let b = this.buildings.find(b => b === building);
+    let b = this.buildings.find(b => b === building);
+    if (amount > 0 && this.idlePopulation >= amount) {
       if (b && b.maxWorkers >= (b.workers + amount)) {
         b.workers += amount;
       }
+    } else if (amount < 0) {
+      if (b && b.workers > amount) {
+        b.workers += amount;
+      }
     }
-
-    this.checkWorkerPriority();
   }
 
   changeWorkerPriority(building: Building, type: 'Max' | 'Maintain' | 'Fixed' | 'None') {

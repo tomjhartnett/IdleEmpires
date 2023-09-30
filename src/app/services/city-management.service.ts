@@ -39,6 +39,7 @@ export class CityManagementService {
       )
     );
   }
+
   tick() {
     this.getCities().forEach(city => {
       let food = city.currentFoodFloat + (city.totalExpectedResources.get("Crops") || 0);

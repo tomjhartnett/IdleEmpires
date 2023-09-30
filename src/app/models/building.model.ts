@@ -13,7 +13,8 @@ export class Building {
   autoUpgrade = true;
 
   get expectedOutput(): {resource: string, amount: number}[] {
-    return this.job.outputResources.map(r => ({resource: r.resource, amount: r.amount * this.workers}));
+    return this.job.outputResources.map(r => ({resource: r.resource, amount: r.amount * this.workers}))
+      .concat(this.job.inputResources.map(r => ({resource: r.resource, amount: r.amount * this.workers * -1})));
   }
 
   get upgradeCost(): {resource: string, amount: number}[] {

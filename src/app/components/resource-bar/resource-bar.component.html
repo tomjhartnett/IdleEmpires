@@ -1,7 +1,7 @@
 <div class="resource-bar">
   <ng-container *ngFor="let resource of formattedResourceBar">
     <div class="resource">
-      {{ resource.resource }}: {{ resource.amount }} {{ totalExpectedOutput.has(resource.resource) && totalExpectedOutput.get(resource.resource)! > 0 ? "(+" + totalExpectedOutput.get(resource.resource)! + ")" : "" }}
+      {{ resource.resource }}: {{ resource.amount }} {{ totalExpectedOutput.has(resource.resource) ? "(" + (totalExpectedOutput.get(resource.resource)! > 0 ? "+" : "") + totalExpectedOutput.get(resource.resource)! + ")" : "" }}
     </div>
   </ng-container>
   <div>
