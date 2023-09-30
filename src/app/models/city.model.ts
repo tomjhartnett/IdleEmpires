@@ -24,9 +24,9 @@ export class City {
     return this.expectedDailyFoodOutput - this.population;
   }
 
-  get expectedYearlyPopGrowth(): number {
+  get expectedMonthlyPopGrowth(): number {
     let expectedFood = this.expectedDailyFoodChange;
-    expectedFood *= 365;
+    expectedFood *= 30;
     let count = 0;
     let pop = this.population;
     if (expectedFood > 0) {
@@ -35,13 +35,11 @@ export class City {
         count++;
       }
     } else {
-      if (expectedFood < 0) {
-        while(expectedFood < 0) {
-          expectedFood += (this._getPopCost(--pop) - pop);
-          count--;
-          if(this._getPopCost(pop) <= 0)
-            break;
-        }
+      while(expectedFood < 0) {
+        expectedFood += (this._getPopCost(--pop) - pop);
+        count--;
+        if(this._getPopCost(pop) <= 0)
+          break;
       }
     }
     return count;
@@ -95,7 +93,6 @@ export class City {
   }
 
   checkWorkerPriority() {
-    let totalPop = this.population;
     let sortedBuildings = this.buildings.sort((a, b) => a.priority - b.priority);
     sortedBuildings.forEach(building => {
       switch (building.workerPriorityType) {
@@ -121,5 +118,21 @@ export class City {
         upgrades.push(building);
     });
     return upgrades;
+  }
+
+  tickFood() {
+    let food = this.currentFoodFloat + (this.totalExpectedResources.get("Crops") || 0) - this.population;
+    if (food > 0) {
+      while (food >= this.nextPopulationCost) {
+        food -= this.nextPopulationCost;
+        this.population++;
+      }
+    } else {
+      while (food < 0) {
+        food += this._getPopCost(this.population - 1);
+        this.population--;
+      }
+    }
+    this.currentFoodFloat = food;
   }
 }

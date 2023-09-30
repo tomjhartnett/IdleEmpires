@@ -41,41 +41,32 @@ export class CityManagementService {
   }
 
   tick() {
+    // handle food and population growth
     this.getCities().forEach(city => {
-      let food = city.currentFoodFloat + (city.totalExpectedResources.get("Crops") || 0);
-      while (food > city.nextPopulationCost) {
-        food -= city.nextPopulationCost;
-        city.population++;
-      }
-      this.resourceManagementService.addResources([{resource: "Crops", amount: food * -1}])
+      city.tickFood();
     });
 
+    // handle nonfood resource growth
     this.getCities().forEach(city => {
       let resources = [];
-      let food = city.currentFoodFloat;
       for(let key of city.totalExpectedResources.keys()) {
         if (key != "Crops") {
           resources.push({resource: key, amount: city.totalExpectedResources.get(key) || 0});
-        } else {
-          food += (city.totalExpectedResources.get(key) || 0);
         }
       }
-
-      while (food > city.nextPopulationCost) {
-        food -= city.nextPopulationCost;
-        city.population++;
-      }
-      city.currentFoodFloat = food;
 
       this.resourceManagementService._changeResources(resources)
     });
 
-
+    // upgrade buildings as needed
     this.getCities().forEach(city => {
       let upgrades = city.checkAutoUpgrade();
       if (upgrades.length) {
         upgrades.forEach(building => {
-          this.upgradeBuilding(city, building);
+          let keepUpgrading = true;
+          while (keepUpgrading) {
+            keepUpgrading = this.upgradeBuilding(city, building);
+          }
         })
       }
     });
@@ -87,12 +78,14 @@ export class CityManagementService {
     return this.cities;
   }
 
-  upgradeBuilding(city: City, building: Building) {
+  upgradeBuilding(city: City, building: Building): boolean {
     let b = city.buildings.find(b => b === building);
     if (b && this.resourceManagementService.hasResources(b.upgradeCost)) {
       building.level++;
       this.getCities().forEach(city => city.checkWorkerPriority());
       this.resourceManagementService.removeResources(b.upgradeCost);
+      return true;
     }
+    return false;
   }
 }
