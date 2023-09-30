@@ -31,7 +31,7 @@ export class CityManagementService {
       new City("Madrid",
         [
           new Building(1, "Farm", 4, new Job("Farming", [], [{resource: "Crops", amount: 4}]), [{resource: "Wood", amount: 2}]),
-          new Building(0, "Woodcutter", 1, new Job("Woodcutting", [], [{resource: "Wood", amount: 1}]), [{resource: "Wood", amount: 2}]),
+          new Building(2, "Woodcutter", 1, new Job("Woodcutting", [], [{resource: "Wood", amount: 1}]), [{resource: "Wood", amount: 2}]),
           new Building(3, "Tax Collector", 1, new Job("Tax Collecting", [], [{resource: "Gold", amount: 1}]), [{resource: "Wood", amount: 2}]),
           new Building(4, "Research Center", 1, new Job("Researching", [{resource: "Gold", amount: 1}], [{resource: "Research", amount: 1}]), [{resource: "Wood", amount: 2}])
         ],
@@ -64,8 +64,9 @@ export class CityManagementService {
       if (upgrades.length) {
         upgrades.forEach(building => {
           let keepUpgrading = true;
-          while (keepUpgrading) {
+          while (keepUpgrading && building.maxWorkers == building.workers) {
             keepUpgrading = this.upgradeBuilding(city, building);
+            city.checkWorkerPriority();
           }
         })
       }

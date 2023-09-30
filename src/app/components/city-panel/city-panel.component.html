@@ -33,7 +33,7 @@
         </div>
         <div class="profession-controls">
           <button (click)="adjustWorkers(city, building, 'decrease')">-</button>
-          <span style="margin: 3px; text-align: center">{{ building.workers }} Pop<br>{{ building.workers == building.maxWorkers ? "Max" : "" }}</span>
+          <span style="margin: 3px; text-align: center">{{ building.workers }}/ {{ building.maxWorkers}} Workers</span>
           <button (click)="adjustWorkers(city, building, 'increase')">+</button>
         </div>
         <div class="upgrade-button">

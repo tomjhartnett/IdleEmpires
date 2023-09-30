@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CityManagementService} from "../../services/city-management.service";
 import {City} from "../../models/city.model";
 import {Building} from "../../models/building.model";
@@ -29,11 +29,16 @@ export class CityPanelComponent implements OnInit {
   }
 
   adjustPriority(city: any, building: any, action: string) {
-    if (action === 'increase') {
-      building.priority++;
-    } else if (action === 'decrease' && building.priority > 0) {
-      building.priority--;
+    let change = action == 'increase' ? 1 : -1;
+    if (change + building.priority < 1) {
+      return;
     }
+    let swapIndex = city.buildings.map((b: Building) => b.priority).indexOf(building.priority + change);
+    if (swapIndex > -1) {
+      city.buildings[swapIndex].priority = building.priority;
+    }
+    building.priority += change;
+
     city.buildings = city.buildings.sort((a: Building, b: Building) => a.priority - b.priority);
   }
 
