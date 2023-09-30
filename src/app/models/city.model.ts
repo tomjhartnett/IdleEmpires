@@ -8,12 +8,20 @@ export class City {
 
   currentFoodFloat = 0;
 
+  get availableWorkers(): number {
+    return this.population - this.buildings.map(b => b.workers).reduce((s, a) => s + a, 0);
+  }
+
   get nextPopulationCost() {
     return this._getPopCost(this.population);
   }
 
+  get expectedDailyFoodOutput(): number {
+    return (this.totalExpectedResources.get("Crops") || 0);
+  }
+
   get expectedDailyFoodChange(): number {
-    return (this.totalExpectedResources.get("Crops") || 0) - this.population;
+    return this.expectedDailyFoodOutput - this.population;
   }
 
   get expectedYearlyPopGrowth(): number {
@@ -57,7 +65,7 @@ export class City {
 
   constructor(name: string, buildings: Building[], population: number, image?: string) {
     this.name = name;
-    this.buildings = buildings;
+    this.buildings = buildings.sort((a, b) => a.priority - b.priority);
     this.population = population;
     this.image = image;
   }
@@ -74,6 +82,40 @@ export class City {
       }
     }
 
-    return false;
+    this.checkWorkerPriority();
+  }
+
+  changeWorkerPriority(building: Building, type: 'Max' | 'Maintain' | 'Fixed' | 'None') {
+      building.workerPriorityType = type;
+      this.checkWorkerPriority();
+  }
+
+  checkWorkerPriority() {
+    let totalPop = this.population;
+    let sortedBuildings = this.buildings.sort((a, b) => a.priority - b.priority);
+    sortedBuildings.forEach(building => {
+      switch (building.workerPriorityType) {
+        case "Fixed": break;
+        case "Max": this.availableWorkers >= building.openWorkspaces ?
+          building.workers += building.openWorkspaces :
+          building.workers += this.availableWorkers;
+          break;
+        // case "Maintain":
+        //   let resourceDeficit = building.output.map(r => r.resource);
+        //
+        //   break;
+        case "None": building.workers = 0; break;
+        default: console.log(building.workers, this.availableWorkers);
+      }
+    });
+  }
+
+  checkAutoUpgrade(): Building[] {
+    let upgrades: Building[] = [];
+    this.buildings.forEach(building => {
+      if (building.autoUpgrade && building.workers === building.maxWorkers)
+        upgrades.push(building);
+    });
+    return upgrades;
   }
 }

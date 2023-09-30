@@ -1,24 +1,30 @@
-<div class="city-list">
+<div class="city-list" xmlns="http://www.w3.org/1999/html">
   <div *ngFor="let city of cities" class="city-card">
     <div class="city-info">
       <h2>{{ city.name }}</h2>
-      <p>Population: {{ city.population }} {{ city.idlePopulation > 0 ? "(" + city.idlePopulation + " Idle)" : "" }}, Next Pop Cost: {{city.nextPopulationCost}}</p>
-      <p>Daily Food Change: {{city.expectedDailyFoodChange}}, Daily Pop Cost: {{city.population}}</p>
-      <p>Expected Yearly Pop Gain: {{city.expectedYearlyPopGrowth}}</p>
+      <p>Population: {{ city.population }} {{ city.idlePopulation > 0 ? "(" + city.idlePopulation + " Idle)" : "" }}</p>
+      <p>Food Output: {{city.expectedDailyFoodOutput}}, Daily Citizen Food Cost: {{city.population}}</p>
+      <p>Net Food: {{city.expectedDailyFoodChange}}, Expected Yearly Pop Gain: {{city.expectedYearlyPopGrowth}}</p>
     </div>
     <div class="profession-list">
       <div class="profession-card" *ngFor="let building of city.buildings">
         <div class="priority-controls">
           <button (click)="adjustPriority(city, building, 'decrease')">-</button>
-          <span>{{ building.priority }}</span>
+          <span>{{ building.priority }} Priority</span>
           <button (click)="adjustPriority(city, building, 'increase')">+</button>
+        </div>
+        <div class="worker-controls">
+          <button (click)="changeWorkerPriority(city, building, 'Max')" [ngClass]="{'selected': building.workerPriorityType == 'Max'}">Max</button>
+<!--          <button (click)="changeWorkerPriority(city, building, 'Maintain')" [ngClass]="{'selected': building.workerPriorityType == 'Maintain'}">Maintain</button>-->
+          <button (click)="changeWorkerPriority(city, building, 'Fixed')" [ngClass]="{'selected': building.workerPriorityType == 'Fixed'}">Fixed</button>
+          <button (click)="changeWorkerPriority(city, building, 'None')" [ngClass]="{'selected': building.workerPriorityType == 'None'}">None</button>
         </div>
         <div class="profession-name">
           <span>Level {{building.level}} {{ building.name }}<br>Output: {{building.outputFormatted}}</span>
         </div>
         <div class="profession-controls">
           <button (click)="adjustWorkers(city, building, 'decrease')">-</button>
-          <span style="margin: 3px; text-align: center">{{ building.workers }} <br>{{ building.workers == building.maxWorkers ? "Max" : "" }}</span>
+          <span style="margin: 3px; text-align: center">{{ building.workers }} Pop<br>{{ building.workers == building.maxWorkers ? "Max" : "" }}</span>
           <button (click)="adjustWorkers(city, building, 'increase')">+</button>
         </div>
         <div class="upgrade-button">
@@ -26,6 +32,10 @@
             Upgrade <br>
             {{building.upgradeCostFormatted}}
           </button>
+          <div>
+            Auto-upgrade?
+            <input type="checkbox" [(ngModel)]="building.autoUpgrade"/>
+          </div>
         </div>
       </div>
     </div>

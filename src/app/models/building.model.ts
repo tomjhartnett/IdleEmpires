@@ -8,7 +8,9 @@ export class Building {
   _upgradeCost: {resource: string, amount: number}[];
 
   workers: number = 0;
-  priority: number = 1;
+  priority: number;
+  workerPriorityType: 'Max' | 'Maintain' | 'Fixed' | 'None' = 'Fixed';
+  autoUpgrade = false;
 
   get expectedOutput(): {resource: string, amount: number}[] {
     return this.job.outputResources.map(r => ({resource: r.resource, amount: r.amount * this.workers}));
@@ -33,7 +35,12 @@ export class Building {
     return this.level;
   }
 
-  constructor(name: string, level: number, job: Job, upgradeCost: {resource: string, amount: number}[], image?: string) {
+  get openWorkspaces() {
+    return this.maxWorkers - this.workers;
+  }
+
+  constructor(priority: number, name: string, level: number, job: Job, upgradeCost: {resource: string, amount: number}[], image?: string) {
+    this.priority = priority;
     this.name = name;
     this.level = level;
     this.job = job;

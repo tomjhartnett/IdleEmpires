@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CityManagementService} from "../../services/city-management.service";
 import {City} from "../../models/city.model";
-import {ResourceManagementService} from "../../services/resource-management.service";
+import {Building} from "../../models/building.model";
 
 @Component({
   selector: 'app-city-panel',
@@ -9,7 +9,6 @@ import {ResourceManagementService} from "../../services/resource-management.serv
   styleUrls: ['./city-panel.component.css']
 })
 export class CityPanelComponent implements OnInit {
-
   cities: City[];
 
   constructor(
@@ -35,9 +34,14 @@ export class CityPanelComponent implements OnInit {
     } else if (action === 'decrease' && building.priority > 0) {
       building.priority--;
     }
+    city.buildings = city.buildings.sort((a: Building, b: Building) => a.priority - b.priority);
   }
 
-  upgrade(city: any, building: any) {
+  upgrade(city: City, building: Building) {
     this.cityManagementService.upgradeBuilding(city, building);
+  }
+
+  changeWorkerPriority(city: City, building: Building, type: 'Max' | 'Maintain' | 'Fixed' | 'None') {
+    city.changeWorkerPriority(building, type);
   }
 }

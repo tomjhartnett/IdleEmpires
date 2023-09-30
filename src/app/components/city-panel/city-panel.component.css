@@ -34,7 +34,7 @@
 }
 
 .profession-card {
-  flex-basis: calc(50% - 5px); /* Each profession card takes up 50% of the width */
+  flex-basis: calc(70% - 5px); /* Each profession card takes up 50% of the width */
   display: flex;
   align-items: center;
   margin: 5px;
@@ -77,3 +77,8 @@ button {
 button:hover {
   background-color: #0056b3;
 }
+
+.selected {
+  background-color: #333;
+}
+

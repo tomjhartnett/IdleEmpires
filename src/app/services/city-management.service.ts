@@ -30,8 +30,8 @@ export class CityManagementService {
     this.cities.push(
       new City("Madrid",
         [
-          new Building("Farm", 4, new Job("Farming", [], [{resource: "Crops", amount: 2}]), [{resource: "Wood", amount: 1}]),
-          new Building("Woodcutter", 1, new Job("Woodcutting", [], [{resource: "Wood", amount: 1}]), [{resource: "Wood", amount: 1}])
+          new Building(0, "Farm", 4, new Job("Farming", [], [{resource: "Crops", amount: 3}]), [{resource: "Wood", amount: 1}]),
+          new Building(1, "Woodcutter", 1, new Job("Woodcutting", [], [{resource: "Wood", amount: 1}]), [{resource: "Wood", amount: 1}])
         ],
         4
       )
@@ -67,6 +67,21 @@ export class CityManagementService {
 
       this.resourceManagementService.addResources(resources)
     });
+
+
+    this.getCities().forEach(city => {
+      let upgrades = city.checkAutoUpgrade();
+      if (upgrades.length) {
+        upgrades.forEach(building => {
+          if (this.resourceManagementService.hasResources(building.upgradeCost)) {
+            this.resourceManagementService.removeResources(building.upgradeCost);
+            building.level++;
+          }
+        })
+      }
+    });
+
+    this.getCities().forEach(city => city.checkWorkerPriority());
   }
 
   getCities(): City[] {
@@ -77,6 +92,7 @@ export class CityManagementService {
     const neededResources = city.buildings.find(b => b === building)?.upgradeCost;
     if (neededResources && this.resourceManagementService.hasResources(neededResources)) {
       building.level++;
+      this.getCities().forEach(city => city.checkWorkerPriority());
       this.resourceManagementService.removeResources(neededResources);
       return true;
     }
